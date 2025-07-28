@@ -9,7 +9,7 @@ import (
 
 type (
 	IRegisterService interface {
-		Register(ctx context.Context, req *models.Users) (*models.Users, error)
+		Register(ctx context.Context, req *models.RegisterRequest) (models.RegisterResponse, error)
 	}
 
 	IRegisterHandler interface {

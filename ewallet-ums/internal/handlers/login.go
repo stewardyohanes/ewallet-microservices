@@ -10,16 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type RegisterHandler struct {
-	UserService interfaces.IRegisterService
+type LoginHandler struct {
+	LoginService interfaces.ILoginService
 }
 
-func (h *RegisterHandler) RegisterHandler(c *gin.Context) {
+func (h *LoginHandler) LoginHandler(c *gin.Context) {
 	var (
 		log = helpers.Logger
 	)
 
-	req := &models.RegisterRequest{}
+	req := &models.LoginRequest{}
 
 	if err := c.ShouldBindJSON(req); err != nil {
 		log.Error("Error binding JSON", err)
@@ -27,19 +27,18 @@ func (h *RegisterHandler) RegisterHandler(c *gin.Context) {
 		return
 	}
 
-	if err := req.ValidateRegister(); err != nil {
+	if err := req.ValidateLogin(); err != nil {
 		log.Error("Error validating request", err)
 		helpers.SendResponseHTTP(c, http.StatusBadRequest, constants.ErrBadRequest, nil)
 		return
 	}
-
-	resp, err := h.UserService.Register(c.Request.Context(), req)
+	
+	response, err := h.LoginService.Login(c.Request.Context(), req)
 	if err != nil {
-		log.Error("Error registering user", err)
+		log.Error("Error login", err)	
 		helpers.SendResponseHTTP(c, http.StatusInternalServerError, constants.ErrInternalServer, nil)
 		return
 	}
 
-	helpers.SendResponseHTTP(c, http.StatusOK, constants.SuccessMessage, resp)
+	helpers.SendResponseHTTP(c, http.StatusOK, constants.SuccessMessage, response)
 }
-

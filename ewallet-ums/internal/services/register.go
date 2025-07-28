@@ -13,21 +13,40 @@ type RegisterService struct {
 }
 
 
-func (s *RegisterService) Register(ctx context.Context, req *models.Users) (*models.Users, error) {
+func (s *RegisterService) Register(ctx context.Context, req *models.RegisterRequest) (models.RegisterResponse, error) {
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, err
+		return models.RegisterResponse{}, err
 	}
 
 	req.Password = string(hashPassword)
-
-	err = s.UserRepo.InsertNewUser(req)
-	if err != nil {
-		return nil, err
+	
+	user := &models.Users{
+		Username: req.Username,
+		Email: req.Email,
+		PhoneNumber: req.PhoneNumber,
+		FullName: req.FullName,
+		Address: req.Address,
+		Dob: req.Dob,
+		Password: req.Password,
 	}
 
-	resp := req
-	resp.Password = ""
+	err = s.UserRepo.InsertNewUser(user)
+	if err != nil {
+		return models.RegisterResponse{}, err
+	}
+
+	resp := models.RegisterResponse{
+		ID: user.ID,
+		Username: user.Username,
+		Email: user.Email,
+		PhoneNumber: user.PhoneNumber,
+		FullName: user.FullName,
+		Address: user.Address,
+		Dob: user.Dob,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
 
 	return resp, nil
 }
