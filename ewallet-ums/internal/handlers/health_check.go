@@ -15,9 +15,9 @@ type HealthCheck struct {
 func (h *HealthCheck) HealthCheckHandlerHTTP(c *gin.Context) {
 	msg, err := h.HealthCheckService.HealthCheckService()
 	if err != nil {
-		helpers.SendResposneHTTP(c, http.StatusInternalServerError, err.Error(), nil)
+		helpers.SendResponseHTTP(c, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
 
-	helpers.SendResposneHTTP(c, http.StatusOK, msg, nil)
+	helpers.SendResponseHTTP(c, http.StatusOK, msg, nil)
 }

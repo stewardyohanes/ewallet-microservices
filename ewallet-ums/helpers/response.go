@@ -7,7 +7,7 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
-func SendResposneHTTP(c *gin.Context, code int, message string, data interface{}) {
+func SendResponseHTTP(c *gin.Context, code int, message string, data interface{}) {
 	resp := Response{
 		Message: message,
 		Data:    data,
