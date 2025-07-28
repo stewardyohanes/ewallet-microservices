@@ -19,7 +19,10 @@ func (s *LoginService) Login(ctx context.Context, req *models.LoginRequest) (mod
 		loginResponse models.LoginResponse
 	)
 
-	user, err := s.UserRepo.GetUserByUsername(req.Username)
+	dbCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+
+	user, err := s.UserRepo.GetUserByUsername(dbCtx, req.Username)
 	if err != nil {
 		return loginResponse, err
 	}
@@ -64,7 +67,10 @@ func (s *LoginService) Login(ctx context.Context, req *models.LoginRequest) (mod
 		RefreshTokenExpired: loginResponse.RefreshExpired,
 	}
 
-	err = s.UserRepo.InsertNewUserSession(userSession)
+	sessionCtx, sessionCancel := context.WithTimeout(ctx, 5*time.Second)
+	defer sessionCancel()
+
+	err = s.UserRepo.InsertNewUserSession(sessionCtx, userSession)
 	if err != nil {
 		return loginResponse, err
 	}

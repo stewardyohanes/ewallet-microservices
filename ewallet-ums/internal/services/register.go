@@ -4,6 +4,7 @@ import (
 	"context"
 	"ewallet-ums/internal/interfaces"
 	"ewallet-ums/internal/models"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -14,6 +15,9 @@ type RegisterService struct {
 
 
 func (s *RegisterService) Register(ctx context.Context, req *models.RegisterRequest) (models.RegisterResponse, error) {
+	dbCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return models.RegisterResponse{}, err
@@ -31,7 +35,7 @@ func (s *RegisterService) Register(ctx context.Context, req *models.RegisterRequ
 		Password: req.Password,
 	}
 
-	err = s.UserRepo.InsertNewUser(user)
+	err = s.UserRepo.InsertNewUser(dbCtx, user)
 	if err != nil {
 		return models.RegisterResponse{}, err
 	}

@@ -11,7 +11,7 @@ import (
 )
 
 type RegisterHandler struct {
-	UserService interfaces.IRegisterService
+	RegisterService interfaces.IRegisterService
 }
 
 func (h *RegisterHandler) RegisterHandler(c *gin.Context) {
@@ -33,7 +33,7 @@ func (h *RegisterHandler) RegisterHandler(c *gin.Context) {
 		return
 	}
 
-	resp, err := h.UserService.Register(c.Request.Context(), req)
+	resp, err := h.RegisterService.Register(c.Request.Context(), req)
 	if err != nil {
 		log.Error("Error registering user", err)
 		helpers.SendResponseHTTP(c, http.StatusInternalServerError, constants.ErrInternalServer, nil)
