@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"ewallet-microservices/helpers"
-	"ewallet-microservices/internal/handlers"
-	"ewallet-microservices/internal/services"
+	"ewallet-ums/helpers"
+	"ewallet-ums/internal/handlers"
+	"ewallet-ums/internal/services"
 	"fmt"
 	"log"
 

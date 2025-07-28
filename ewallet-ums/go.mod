@@ -1,4 +1,4 @@
-module ewallet-microservices
+module ewallet-ums
 
 go 1.23.3
 

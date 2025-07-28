@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ewallet-microservices/cmd"
-	"ewallet-microservices/helpers"
+	"ewallet-ums/cmd"
+	"ewallet-ums/helpers"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"ewallet-microservices/helpers"
-	"ewallet-microservices/internal/interfaces"
+	"ewallet-ums/helpers"
+	"ewallet-ums/internal/interfaces"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

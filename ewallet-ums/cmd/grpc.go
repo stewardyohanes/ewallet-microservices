@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"ewallet-microservices/helpers"
+	"ewallet-ums/helpers"
 	"log"
 	"net"
 
