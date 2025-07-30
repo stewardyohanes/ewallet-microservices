@@ -40,6 +40,10 @@ type (
 		CreatedAt   time.Time `json:"-"`
 		UpdatedAt   time.Time `json:"-"`
 	}
+
+	RefreshTokenResponse struct {
+		Token         string `json:"token"`
+	}
 )
 
 type (

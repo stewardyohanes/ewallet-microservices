@@ -37,7 +37,7 @@ func (r *UserRepository) DeleteUserSession(ctx context.Context, userSession *mod
 
 
 func (r *UserRepository) UpdateTokenWByRefreshToken(ctx context.Context, token string, refreshToken string) error {
-	return r.DB.Exec("UPDATE user_sessions SET token = ? WHERE refresh_token = ?", token, refreshToken).Error
+	return r.DB.WithContext(ctx).Exec("UPDATE user_sessions SET token = ? WHERE refresh_token = ?", token, refreshToken).Error
 }
 
 func (r *UserRepository) GetUserSessionByToken(ctx context.Context, token string) (models.UserSessions, error) {

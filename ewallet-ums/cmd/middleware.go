@@ -47,7 +47,7 @@ func (d *Dependency) MiddlewareValidateAuth(ctx *gin.Context)  {
 	ctx.Next()
 }
 
-func MiddlewareRefreshToken(ctx *gin.Context)  {
+func (d *Dependency) MiddlewareRefreshToken(ctx *gin.Context)  {
 	auth := ctx.Request.Header.Get("Authorization")
 
 	if auth == "" {
